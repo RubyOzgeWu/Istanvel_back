@@ -54,7 +54,7 @@ const schema = new mongoose.Schema({
     type: String,
     required: [true, '缺少分類欄位'],
     enum: {
-      values: ['History & Culture', 'Nature', 'sacred religion', 'shopping', 'cruisine'],
+      values: ['History & Culture', 'Nature', 'sacred religion', 'shopping & experience', 'cruisine'],
       message: '商品分類錯誤'
     }
   },
