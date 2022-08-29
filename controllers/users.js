@@ -396,7 +396,6 @@ export const getOrderInfo = async (req, res) => {
 // editOrderInfo-----------------------------------------------------------
 export const editOrderInfo = async (req, res) => {
   try {
-    console.log(req.body)
     const result = await users.findOneAndUpdate(
       { _id: req.user._id, 'orderInfo._id': req.body._id },
       {
