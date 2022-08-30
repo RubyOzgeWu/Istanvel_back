@@ -5,7 +5,7 @@ export const getActivities = async (req, res) => {
     const result = await activities.find({ sell: true })
     res.status(200).send({ success: true, message: '', result })
   } catch (error) {
-    res.status(500).send({ success: false, message: '伺服器錯誤' })
+    res.status(500).send({ success: false, message: 'error' })
   }
 }
 
@@ -14,7 +14,7 @@ export const getActivity = async (req, res) => {
     const result = await activities.findById(req.params.id)
     res.status(200).send({ success: true, message: '', result })
   } catch (error) {
-    res.status(500).send({ success: false, message: '伺服器錯誤' })
+    res.status(500).send({ success: false, message: 'error' })
   }
 }
 
@@ -43,7 +43,7 @@ export const createActivity = async (req, res) => {
       const message = error.errors[key].message
       return res.status(400).send({ success: false, message })
     } else {
-      res.status(500).send({ success: false, message: '伺服器錯誤' })
+      res.status(500).send({ success: false, message: 'error' })
     }
   }
 }
@@ -53,7 +53,7 @@ export const getAllActivities = async (req, res) => {
     const result = await activities.find()
     res.status(200).send({ success: true, message: '', result })
   } catch (error) {
-    res.status(500).send({ success: false, message: '伺服器錯誤' })
+    res.status(500).send({ success: false, message: 'error' })
   }
 }
 
@@ -83,7 +83,7 @@ export const editActivity = async (req, res) => {
       const message = error.errors[key].message
       return res.status(400).send({ success: false, message })
     } else {
-      res.status(500).send({ success: false, message: '伺服器錯誤' })
+      res.status(500).send({ success: false, message: 'error' })
     }
   }
 }
@@ -94,6 +94,6 @@ export const deleteActivity = async (req, res) => {
     // await orders.deleteMany({ user: req.params.id })
     res.status(200).send({ success: true, message: '' })
   } catch (error) {
-    res.status(500).send({ success: false, message: '伺服器錯誤' })
+    res.status(500).send({ success: false, message: 'error' })
   }
 }

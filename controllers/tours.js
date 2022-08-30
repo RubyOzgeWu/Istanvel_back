@@ -5,7 +5,7 @@ export const getTours = async (req, res) => {
     const result = await tours.find({ sell: true })
     res.status(200).send({ success: true, message: '', result })
   } catch (error) {
-    res.status(500).send({ success: false, message: '伺服器錯誤' })
+    res.status(500).send({ success: false, message: 'error' })
   }
 }
 
@@ -14,7 +14,7 @@ export const getTour = async (req, res) => {
     const result = await tours.findById(req.params.id)
     res.status(200).send({ success: true, message: '', result })
   } catch (error) {
-    res.status(500).send({ success: false, message: '伺服器錯誤' })
+    res.status(500).send({ success: false, message: 'error' })
   }
 }
 
@@ -24,7 +24,7 @@ export const getAllTours = async (req, res) => {
     const result = await tours.find()
     res.status(200).send({ success: true, message: '', result })
   } catch (error) {
-    res.status(500).send({ success: false, message: '伺服器錯誤' })
+    res.status(500).send({ success: false, message: 'error' })
   }
 }
 
@@ -57,7 +57,7 @@ export const createTour = async (req, res) => {
       const message = error.errors[key].message
       return res.status(400).send({ success: false, message })
     } else {
-      res.status(500).send({ success: false, message: '伺服器錯誤' })
+      res.status(500).send({ success: false, message: 'error' })
     }
   }
 }
@@ -92,7 +92,7 @@ export const editTour = async (req, res) => {
       const message = error.errors[key].message
       return res.status(400).send({ success: false, message })
     } else {
-      res.status(500).send({ success: false, message: '伺服器錯誤' })
+      res.status(500).send({ success: false, message: 'error' })
     }
   }
 }
@@ -103,6 +103,6 @@ export const deleteTour = async (req, res) => {
     // await orders.deleteMany({ user: req.params.id })
     res.status(200).send({ success: true, message: '' })
   } catch (error) {
-    res.status(500).send({ success: false, message: '伺服器錯誤' })
+    res.status(500).send({ success: false, message: 'error' })
   }
 }

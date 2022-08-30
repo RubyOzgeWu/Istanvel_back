@@ -35,7 +35,7 @@ export const register = async (req, res) => {
     } else if (error.name === 'MongoServerError' && error.code === 11000) {
       res.status(400).send({ success: false, message: 'The account has already existed.' })
     } else {
-      res.status(500).send({ success: false, message: 'errpr' })
+      res.status(500).send({ success: false, message: 'error' })
     }
   }
 }

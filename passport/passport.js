@@ -15,10 +15,10 @@ passport.use('login', new LocalStrategy({
   try {
     const user = await users.findOne({ account })
     if (!user) {
-      return done(null, false, { message: '帳號不存在' })
+      return done(null, false, { message: 'Account does not exist.' })
     }
     if (!bcrypt.compareSync(password, user.password)) {
-      return done(null, false, { message: '密碼錯誤' })
+      return done(null, false, { message: 'Wrong password' })
     }
     return done(null, user)
   } catch (error) {
@@ -34,16 +34,16 @@ passport.use('jwt', new JWTStrategy({
 }, async (req, payload, done) => {
   const expired = payload.exp * 1000 < Date.now()
   if (expired && req.originalUrl !== '/users/extend' && req.originalUrl !== '/users/logout') {
-    return done(null, false, { message: '登入逾期' })
+    return done(null, false, { message: 'Please login again.' })
   }
   const token = req.headers.authorization.split(' ')[1]
   try {
     const user = await users.findById(payload._id)
     if (!user) {
-      return done(null, false, { message: '使用者不存在' })
+      return done(null, false, { message: 'User does not exist' })
     }
     if (user.tokens.indexOf(token) === -1) {
-      return done(null, false, { message: '驗證錯誤' })
+      return done(null, false, { message: 'Failed to authenticate.' })
     }
     return done(null, { user, token })
   } catch (error) {
