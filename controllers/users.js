@@ -33,9 +33,9 @@ export const register = async (req, res) => {
       const message = error.errors[key].message
       return res.status(400).send({ success: false, message })
     } else if (error.name === 'MongoServerError' && error.code === 11000) {
-      res.status(400).send({ success: false, message: '帳號已存在' })
+      res.status(400).send({ success: false, message: 'The account has already existed.' })
     } else {
-      res.status(500).send({ success: false, message: '伺服器錯誤' })
+      res.status(500).send({ success: false, message: 'errpr' })
     }
   }
 }
@@ -58,7 +58,7 @@ export const login = async (req, res) => {
       }
     })
   } catch (error) {
-    res.status(500).send({ success: false, message: '伺服器錯誤' })
+    res.status(500).send({ success: false, message: 'error' })
   }
 }
 
@@ -69,7 +69,7 @@ export const logout = async (req, res) => {
     await req.user.save()
     res.status(200).send({ success: true, message: '' })
   } catch (error) {
-    res.status(500).send({ success: false, message: '伺服器錯誤' })
+    res.status(500).send({ success: false, message: 'error' })
   }
 }
 
@@ -82,7 +82,7 @@ export const extend = async (req, res) => {
     await req.user.save()
     res.status(200).send({ success: true, message: '', result: token })
   } catch (error) {
-    res.status(500).send({ success: false, message: '伺服器錯誤' })
+    res.status(500).send({ success: false, message: 'error' })
   }
 }
 
@@ -100,7 +100,7 @@ export const getUser = (req, res) => {
       }
     })
   } catch (error) {
-    res.status(500).send({ success: false, message: '伺服器錯誤' })
+    res.status(500).send({ success: false, message: 'error' })
   }
 }
 
@@ -110,7 +110,7 @@ export const getUsers = async (req, res) => {
     const result = await users.find()
     res.status(200).send({ success: true, message: '', result })
   } catch (error) {
-    res.status(500).send({ success: false, message: '伺服器錯誤' })
+    res.status(500).send({ success: false, message: 'error' })
   }
 }
 
@@ -121,48 +121,11 @@ export const deleteUser = async (req, res) => {
     // await orders.deleteMany({ user: req.params.id })
     res.status(200).send({ success: true, message: '' })
   } catch (error) {
-    res.status(500).send({ success: false, message: '伺服器錯誤' })
+    res.status(500).send({ success: false, message: 'error' })
   }
 }
 
-// addTourOrder------------------------------------------------------------------------------
-// export const addCart = async (req, res) => {
-//   try {
-//     // 驗證商品
-//     const result = await tours.findById(req.body.tour)
-//     // 沒找到或已下架
-//     if (!result || !result.sell) {
-//       return res.status(404).send({ success: false, message: '商品不存在' })
-//     }
-//     // 找購物車有沒有這個商品
-//     const idx = req.user.cart.findIndex(item => item.tour.toString() === req.body.tour)
-//     if (idx > -1) {
-//       req.user.cart[idx].quantity += req.body.quantity
-//     } else {
-//       req.user.cart.push({
-//         tour: req.body.tour,
-//         name: req.body.name,
-//         email: req.body.email,
-//         phone: req.body.phone,
-//         quantity: req.body.quantity,
-//         message: req.body.message
-//       })
-//     }
-//     await req.user.save()
-//     console.log(req.user.cart)
-//     res.status(200).send({ success: true, message: '', result: req.user.cart.length })
-//   } catch (error) {
-//     console.log(error)
-//     if (error.name === 'ValidationError') {
-//       const key = Object.keys(error.errors)[0]
-//       const message = error.errors[key].message
-//       return res.status(400).send({ success: false, message })
-//     } else {
-//       res.status(500).send({ success: false, message: '伺服器錯誤' })
-//     }
-//   }
-// }
-
+// addCart--------------------------------------------------------------------------
 export const addCart = (num) => {
   return async (req, res) => {
     try {
@@ -172,7 +135,7 @@ export const addCart = (num) => {
         result = await tours.findById(req.body.tour)
         // 沒找到或已下架
         if (!result || !result.sell) {
-          return res.status(404).send({ success: false, message: '商品不存在' })
+          return res.status(404).send({ success: false, message: 'Product was gone' })
         }
         // 找購物車有沒有這個商品
         const idx = req.user.cart.findIndex(item => item.tour?.toString() === req.body.tour)
@@ -194,7 +157,7 @@ export const addCart = (num) => {
         result = await activities.findById(req.body.activity)
         // 沒找到或已下架
         if (!result || !result.sell) {
-          return res.status(404).send({ success: false, message: '商品不存在' })
+          return res.status(404).send({ success: false, message: 'Activity was gone' })
         }
         // 找購物車有沒有這個商品
         const idx = req.user.cart.findIndex(item => item.activity?.toString() === req.body.activity)
@@ -220,7 +183,7 @@ export const addCart = (num) => {
         const message = error.errors[key].message
         return res.status(400).send({ success: false, message })
       } else {
-        res.status(500).send({ success: false, message: '伺服器錯誤' })
+        res.status(500).send({ success: false, message: 'error' })
       }
     }
   }
@@ -232,7 +195,7 @@ export const getCart = async (req, res) => {
     const result = await users.findById(req.user._id, 'cart').populate('cart.tour').populate('cart.activity')
     res.status(200).send({ success: true, message: '', result: result.cart })
   } catch (error) {
-    res.status(500).send({ success: false, message: '伺服器錯誤' })
+    res.status(500).send({ success: false, message: 'error' })
   }
 }
 
@@ -299,7 +262,7 @@ export const editCart = async (req, res) => {
       const message = error.errors[key].message
       return res.status(400).send({ success: false, message })
     } else {
-      res.status(500).send({ success: false, message: '伺服器錯誤' })
+      res.status(500).send({ success: false, message: 'error' })
     }
   }
 }
@@ -311,7 +274,7 @@ export const addArchive = async (req, res) => {
     const result = await posts.findById(req.body.post)
     // 沒找到或已下架
     if (!result || !result.sell) {
-      return res.status(404).send({ success: false, message: '文章不存在' })
+      return res.status(404).send({ success: false, message: 'Post was gone' })
     }
     // 找購物車有沒有這個商品
     const idx = req.user.archivePost.findIndex(item => item.post.toString() === req.body.post)
@@ -328,7 +291,7 @@ export const addArchive = async (req, res) => {
       const message = error.errors[key].message
       return res.status(400).send({ success: false, message })
     } else {
-      res.status(500).send({ success: false, message: '伺服器錯誤' })
+      res.status(500).send({ success: false, message: 'error' })
     }
   }
 }
@@ -338,7 +301,7 @@ export const getArchive = async (req, res) => {
     const result = await users.findById(req.user._id, 'archivePost').populate('archivePost.post')
     res.status(200).send({ success: true, message: '', result: result.archivePost })
   } catch (error) {
-    res.status(500).send({ success: false, message: '伺服器錯誤' })
+    res.status(500).send({ success: false, message: 'error' })
   }
 }
 // deleteArchive-------------------------------------------------------------------------------------
@@ -359,7 +322,7 @@ export const deleteArchive = async (req, res) => {
       const message = error.errors[key].message
       return res.status(400).send({ success: false, message })
     } else {
-      res.status(500).send({ success: false, message: '伺服器錯誤' })
+      res.status(500).send({ success: false, message: 'error' })
     }
   }
 }
@@ -379,7 +342,7 @@ export const addOrderInfo = async (req, res) => {
       const message = error.errors[key].message
       return res.status(400).send({ success: false, message })
     } else {
-      res.status(500).send({ success: false, message: '伺服器錯誤' })
+      res.status(500).send({ success: false, message: 'error' })
     }
   }
 }
@@ -390,13 +353,12 @@ export const getOrderInfo = async (req, res) => {
     const result = await users.findById(req.user._id, 'orderInfo')
     res.status(200).send({ success: true, message: '', result: result.orderInfo })
   } catch (error) {
-    res.status(500).send({ success: false, message: '伺服器錯誤' })
+    res.status(500).send({ success: false, message: 'error' })
   }
 }
 // editOrderInfo-----------------------------------------------------------
 export const editOrderInfo = async (req, res) => {
   try {
-    console.log(req.body)
     const result = await users.findOneAndUpdate(
       { _id: req.user._id, 'orderInfo._id': req.body._id },
       {
@@ -419,7 +381,7 @@ export const editOrderInfo = async (req, res) => {
       const message = error.errors[key].message
       return res.status(400).send({ success: false, message })
     } else {
-      res.status(500).send({ success: false, message: '伺服器錯誤' })
+      res.status(500).send({ success: false, message: 'error' })
     }
   }
 }
